@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use App\Models\Project;
+use App\Observers\ProjectObserver;
+use App\Services\CacheService;
 use App\Services\UserService;
 use App\Services\TimeTrackingService;
 use App\Services\ProjectService;
@@ -47,6 +50,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(InvoiceService::class, function ($app) {
             return new InvoiceService();
         });
+
+        $this->app->singleton(CacheService::class, function ($app) {
+            return new CacheService();
+        });
     }
 
     /**
@@ -56,6 +63,9 @@ class AppServiceProvider extends ServiceProvider
     {
         // Set pagination theme to Tailwind
         Paginator::useTailwind();
+
+        // Register model observers
+        Project::observe(ProjectObserver::class);
 
         // Configure rate limiting for authentication endpoints
         $this->configureRateLimiting();

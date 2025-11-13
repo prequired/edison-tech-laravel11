@@ -1,0 +1,226 @@
+config:
+  target: "http://localhost"
+  phases:
+    # Warm up phase
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm up"
+
+    # Ramp up phase
+    - duration: 120
+      arrivalRate: 10
+      rampTo: 50
+      name: "Ramp up load"
+
+    # Sustained load phase
+    - duration: 300
+      arrivalRate: 50
+      name: "Sustained load"
+
+    # Spike test
+    - duration: 60
+      arrivalRate: 100
+      name: "Spike test"
+
+    # Cool down
+    - duration: 60
+      arrivalRate: 10
+      name: "Cool down"
+
+  payload:
+    path: "./test-data.csv"
+    fields:
+      - email
+      - password
+
+  defaults:
+    headers:
+      Accept: "application/json"
+      Content-Type: "application/json"
+
+  plugins:
+    metrics-by-endpoint:
+      # Group metrics by endpoint
+      stripQueryString: true
+      ignoreUnknownEndpoints: false
+
+scenarios:
+  # Health check scenario (no auth required)
+  - name: "Health Checks"
+    weight: 10
+    flow:
+      - get:
+          url: "/health"
+          capture:
+            - json: "$.status"
+              as: "healthStatus"
+      - think: 1
+
+      - get:
+          url: "/health/comprehensive"
+          expect:
+            - statusCode: [200, 503]
+
+  # Authentication flow
+  - name: "User Authentication"
+    weight: 20
+    flow:
+      - post:
+          url: "/api/login"
+          json:
+            email: "{{ email }}"
+            password: "{{ password }}"
+          capture:
+            - json: "$.token"
+              as: "authToken"
+          expect:
+            - statusCode: [200, 401]
+
+      - think: 2
+
+  # Authenticated user workflows
+  - name: "Projects Workflow"
+    weight: 30
+    flow:
+      # Login first
+      - post:
+          url: "/api/login"
+          json:
+            email: "admin@example.com"
+            password: "password"
+          capture:
+            - json: "$.token"
+              as: "authToken"
+
+      - think: 1
+
+      # List projects
+      - get:
+          url: "/api/projects"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+      - think: 2
+
+      # Get project details (assuming ID 1 exists)
+      - get:
+          url: "/api/projects/1"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: [200, 404]
+
+      - think: 3
+
+      # List tasks for project
+      - get:
+          url: "/api/tasks?project_id=1"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+  # Invoice workflow
+  - name: "Invoices Workflow"
+    weight: 20
+    flow:
+      # Login
+      - post:
+          url: "/api/login"
+          json:
+            email: "admin@example.com"
+            password: "password"
+          capture:
+            - json: "$.token"
+              as: "authToken"
+
+      - think: 1
+
+      # List invoices
+      - get:
+          url: "/api/invoices"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+      - think: 2
+
+      # Filter invoices by status
+      - get:
+          url: "/api/invoices?status=paid"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+  # Dashboard/Stats workflow
+  - name: "Dashboard Statistics"
+    weight: 15
+    flow:
+      # Login
+      - post:
+          url: "/api/login"
+          json:
+            email: "admin@example.com"
+            password: "password"
+          capture:
+            - json: "$.token"
+              as: "authToken"
+
+      - think: 1
+
+      # Get dashboard stats
+      - get:
+          url: "/api/dashboard/stats"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: [200, 404]
+
+      - think: 2
+
+      # Get project count
+      - get:
+          url: "/api/projects?per_page=1"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          capture:
+            - json: "$.meta.total"
+              as: "projectCount"
+          expect:
+            - statusCode: 200
+
+  # Search workflow
+  - name: "Search Operations"
+    weight: 5
+    flow:
+      # Login
+      - post:
+          url: "/api/login"
+          json:
+            email: "admin@example.com"
+            password: "password"
+          capture:
+            - json: "$.token"
+              as: "authToken"
+
+      # Search projects
+      - get:
+          url: "/api/projects?search=website"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+      - think: 1
+
+      # Search tasks
+      - get:
+          url: "/api/tasks?search=design"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
