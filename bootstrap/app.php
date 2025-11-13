@@ -3,6 +3,9 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\RoleMiddleware;
+use App\Http\Middleware\CompanyActiveMiddleware;
+use App\Http\Middleware\TwoFactorMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,7 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Register custom middleware aliases
+        $middleware->alias([
+            'role' => RoleMiddleware::class,
+            'company.active' => CompanyActiveMiddleware::class,
+            'two-factor' => TwoFactorMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
