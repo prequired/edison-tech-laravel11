@@ -26,7 +26,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(\App\Filament\Pages\Auth\Login::class)
             ->brandName('Edison Tech')
             ->brandLogo(asset('images/edison-tech-logo.svg'))
             ->brandLogoHeight('60px')
@@ -37,6 +37,17 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => Color::Amber,
                 'danger' => Color::Red,
                 'info' => Color::Sky,
+            ])
+            ->font('Inter')
+            ->maxContentWidth('full')
+            ->topNavigation(false)
+            ->sidebarCollapsibleOnDesktop()
+            ->navigationGroups([
+                'Business Operations',
+                'Clients',
+                'Project Management',
+                'Financial',
+                'Documentation',
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -64,6 +75,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
-            ->spa();
-    }
+            ->spa()
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->renderHook(
+                'panels::body.start',
+                fn (): string => '<div class="edison-bg-mesh fixed inset-0 pointer-events-none opacity-40 z-0"></div>'
+            );
 }
