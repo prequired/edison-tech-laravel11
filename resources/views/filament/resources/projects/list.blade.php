@@ -20,37 +20,8 @@
         </div>
 
         {{-- Quick Project Stats --}}
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-            @php
-                $stats = [
-                    [
-                        'label' => 'Planning',
-                        'value' => \App\Models\Project::where('status', 'planning')->count(),
-                        'icon' => 'heroicon-o-light-bulb',
-                        'color' => 'blue',
-                    ],
-                    [
-                        'label' => 'Active',
-                        'value' => \App\Models\Project::where('status', 'active')->count(),
-                        'icon' => 'heroicon-o-rocket-launch',
-                        'color' => 'emerald',
-                    ],
-                    [
-                        'label' => 'Completed',
-                        'value' => \App\Models\Project::where('status', 'completed')->count(),
-                        'icon' => 'heroicon-o-check-circle',
-                        'color' => 'green',
-                    ],
-                    [
-                        'label' => 'On Hold',
-                        'value' => \App\Models\Project::where('status', 'on_hold')->count(),
-                        'icon' => 'heroicon-o-pause-circle',
-                        'color' => 'amber',
-                    ],
-                ];
-            @endphp
-
-            @foreach($stats as $stat)
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            @foreach($this->getQuickStats() as $stat)
                 <div class="relative overflow-hidden rounded-xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-{{ $stat['color'] }}-100 dark:border-{{ $stat['color'] }}-900/30 p-4 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
                     <div class="flex items-center gap-3">
                         <div class="p-2 rounded-lg bg-{{ $stat['color'] }}-50 dark:bg-{{ $stat['color'] }}-900/20">

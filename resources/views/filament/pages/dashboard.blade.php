@@ -14,7 +14,7 @@
             </div>
 
             {{-- Quick Actions --}}
-            <div class="hidden md:flex gap-3">
+            <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
                 <x-filament::button
                     color="primary"
                     icon="heroicon-o-plus-circle"
@@ -37,37 +37,8 @@
         </div>
 
         {{-- Premium Stats Bar --}}
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-            @php
-                $quickStats = [
-                    [
-                        'label' => 'Active Projects',
-                        'value' => \App\Models\Project::where('status', 'active')->count(),
-                        'icon' => 'heroicon-o-briefcase',
-                        'color' => 'blue',
-                    ],
-                    [
-                        'label' => 'Pending Tasks',
-                        'value' => \App\Models\Task::where('status', 'pending')->count(),
-                        'icon' => 'heroicon-o-clipboard-document-check',
-                        'color' => 'amber',
-                    ],
-                    [
-                        'label' => 'Due Invoices',
-                        'value' => \App\Models\Invoice::whereIn('status', ['sent', 'overdue'])->count(),
-                        'icon' => 'heroicon-o-banknotes',
-                        'color' => 'emerald',
-                    ],
-                    [
-                        'label' => 'Team Members',
-                        'value' => \App\Models\User::where('is_active', true)->count(),
-                        'icon' => 'heroicon-o-users',
-                        'color' => 'violet',
-                    ],
-                ];
-            @endphp
-
-            @foreach($quickStats as $stat)
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            @foreach($this->getQuickStats() as $stat)
                 <div class="relative overflow-hidden rounded-xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-{{ $stat['color'] }}-100 dark:border-{{ $stat['color'] }}-900/30 p-4 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
                     <div class="flex items-center gap-3">
                         <div class="p-2 rounded-lg bg-{{ $stat['color'] }}-50 dark:bg-{{ $stat['color'] }}-900/20">
@@ -123,7 +94,7 @@
     {{-- Premium Animations --}}
     <style>
         .fi-wi-wrapper {
-            animation: fadeSlideUp 0.5s ease-out backwards;
+            animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
         }
 
         .fi-wi-wrapper:nth-child(1) { animation-delay: 0.1s; }

@@ -77,4 +77,40 @@ class Dashboard extends BaseDashboard
     {
         return 'Welcome to your executive dashboard. Here\'s what\'s happening with your business today.';
     }
+
+    /**
+     * Get quick stats for dashboard header
+     * Cached for 60 seconds to improve performance
+     */
+    public function getQuickStats(): array
+    {
+        return \Illuminate\Support\Facades\Cache::remember('dashboard.quick_stats', 60, function () {
+            return [
+                [
+                    'label' => 'Active Projects',
+                    'value' => \App\Models\Project::where('status', 'active')->count(),
+                    'icon' => 'heroicon-o-briefcase',
+                    'color' => 'blue',
+                ],
+                [
+                    'label' => 'Pending Tasks',
+                    'value' => \App\Models\Task::where('status', 'pending')->count(),
+                    'icon' => 'heroicon-o-clipboard-document-check',
+                    'color' => 'amber',
+                ],
+                [
+                    'label' => 'Due Invoices',
+                    'value' => \App\Models\Invoice::whereIn('status', ['sent', 'overdue'])->count(),
+                    'icon' => 'heroicon-o-banknotes',
+                    'color' => 'emerald',
+                ],
+                [
+                    'label' => 'Team Members',
+                    'value' => \App\Models\User::where('is_active', true)->count(),
+                    'icon' => 'heroicon-o-users',
+                    'color' => 'violet',
+                ],
+            ];
+        });
+    }
 }

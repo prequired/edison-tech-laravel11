@@ -101,11 +101,11 @@
     }
 
     .animate-confetti-fall {
-        animation: confetti-fall 2s ease-out forwards;
+        animation: confetti-fall 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .animate-scale-bounce {
-        animation: scale-bounce 0.6s ease-out;
+        animation: scale-bounce 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .animate-progress-bar {
