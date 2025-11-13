@@ -1,0 +1,57 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# CI/CD
+.github
+
+# Documentation
+*.md
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+docs/
+
+# Tests
+tests/
+phpunit.xml
+.phpunit.result.cache
+
+# Development dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea
+.vscode
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Storage (will be mounted as volume)
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*
+
+# Vendor (will be installed in build)
+vendor/
+
+# Public build artifacts (will be built)
+public/hot
+public/storage
+public/build
+
+# Temporary files
+*.log
+*.tmp
+.phpunit.cache

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Document;
 use App\Models\Project;
 use App\Models\Company;
+use App\Rules\SecureFileUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,7 +82,7 @@ class DocumentController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'type' => ['required', 'string', 'max:100'],
-            'file' => ['required', 'file', 'max:10240'], // 10MB max
+            'file' => ['required', 'file', new SecureFileUpload(['images', 'documents', 'archives'], 10)],
             'is_public' => ['boolean'],
             'version' => ['nullable', 'string', 'max:50'],
         ]);

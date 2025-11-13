@@ -1,0 +1,154 @@
+version: '3.8'
+
+services:
+  # Laravel Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: edison-tech-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/app.ini
+    environment:
+      - APP_ENV=${APP_ENV:-production}
+      - APP_DEBUG=${APP_DEBUG:-false}
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE:-edison_tech}
+      - DB_USERNAME=${DB_USERNAME:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CACHE_DRIVER=redis
+      - SESSION_DRIVER=redis
+      - QUEUE_CONNECTION=redis
+    networks:
+      - edison-network
+    depends_on:
+      - db
+      - redis
+
+  # Nginx Web Server
+  nginx:
+    image: nginx:alpine
+    container_name: edison-tech-nginx
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-80}:80"
+      - "${APP_SSL_PORT:-443}:443"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - edison-network
+    depends_on:
+      - app
+
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: edison-tech-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE:-edison_tech}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-secret}
+      - MYSQL_USER=${DB_USERNAME:-edison}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-secret}
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    networks:
+      - edison-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  # Redis Cache & Queue
+  redis:
+    image: redis:7-alpine
+    container_name: edison-tech-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - edison-network
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-}
+
+  # Queue Worker
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: edison-tech-queue
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - APP_ENV=${APP_ENV:-production}
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_DATABASE=${DB_DATABASE:-edison_tech}
+      - DB_USERNAME=${DB_USERNAME:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
+      - REDIS_HOST=redis
+      - QUEUE_CONNECTION=redis
+    networks:
+      - edison-network
+    depends_on:
+      - db
+      - redis
+    command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+
+  # Scheduler (Cron)
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: edison-tech-scheduler
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - APP_ENV=${APP_ENV:-production}
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_DATABASE=${DB_DATABASE:-edison_tech}
+      - DB_USERNAME=${DB_USERNAME:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
+    networks:
+      - edison-network
+    depends_on:
+      - db
+      - redis
+    command: sh -c "while true; do php artisan schedule:run --verbose --no-interaction & sleep 60; done"
+
+  # Mailhog (Development Email Testing)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: edison-tech-mailhog
+    restart: unless-stopped
+    ports:
+      - "${MAILHOG_PORT:-1025}:1025"
+      - "${MAILHOG_UI_PORT:-8025}:8025"
+    networks:
+      - edison-network
+    profiles:
+      - development
+
+networks:
+  edison-network:
+    driver: bridge
+
+volumes:
+  db-data:
+    driver: local
+  redis-data:
+    driver: local

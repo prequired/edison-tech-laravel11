@@ -83,10 +83,14 @@ Route::get('/team/{id}', [TeamController::class, 'show'])->name('team.show');
 
 // Contact
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+Route::post('/contact', [ContactController::class, 'submit'])
+    ->middleware('throttle:contact')
+    ->name('contact.submit');
 
 // Newsletter
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
+    ->middleware('throttle:newsletter')
+    ->name('newsletter.subscribe');
 Route::get('/newsletter/unsubscribe', [NewsletterController::class, 'unsubscribePage'])->name('newsletter.unsubscribe');
 Route::post('/newsletter/unsubscribe', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe.submit');
 Route::get('/newsletter/verify/{token}', [NewsletterController::class, 'verify'])->name('newsletter.verify');
@@ -96,19 +100,27 @@ Route::get('/newsletter/verify/{token}', [NewsletterController::class, 'verify']
 // ============================================================================
 
 Route::middleware('guest')->group(function () {
-    // Login
+    // Login - Rate limited to prevent brute force attacks
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+    Route::post('/login', [LoginController::class, 'login'])
+        ->middleware('throttle:auth')
+        ->name('login.submit');
 
-    // Register
+    // Register - Rate limited to prevent spam accounts
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
+    Route::post('/register', [RegisterController::class, 'register'])
+        ->middleware('throttle:auth')
+        ->name('register.submit');
 
-    // Password Reset
+    // Password Reset - Rate limited to prevent email flooding
     Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+        ->middleware('throttle:password-reset')
+        ->name('password.email');
     Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+    Route::post('/password/reset', [ResetPasswordController::class, 'reset'])
+        ->middleware('throttle:password-reset')
+        ->name('password.update');
 });
 
 // Authenticated routes
@@ -116,9 +128,11 @@ Route::middleware('auth')->group(function () {
     // Logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    // Two-Factor Authentication
+    // Two-Factor Authentication - Rate limited to prevent brute force of 2FA codes
     Route::get('/two-factor/verify', [TwoFactorController::class, 'showVerifyForm'])->name('two-factor.verify');
-    Route::post('/two-factor/verify', [TwoFactorController::class, 'verify'])->name('two-factor.verify.submit');
+    Route::post('/two-factor/verify', [TwoFactorController::class, 'verify'])
+        ->middleware('throttle:2fa')
+        ->name('two-factor.verify.submit');
 });
 
 // ============================================================================
