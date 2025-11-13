@@ -28,7 +28,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('Edison Tech')
-            ->favicon(asset('favicon.ico'))
+            ->brandLogo(asset('images/edison-tech-logo.svg'))
+            ->brandLogoHeight('60px')
+            ->favicon(asset('images/favicon.svg'))
             ->colors([
                 'primary' => Color::Blue,
                 'success' => Color::Green,

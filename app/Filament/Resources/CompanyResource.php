@@ -35,6 +35,26 @@ class CompanyResource extends Resource
             ->schema([
                 Forms\Components\Section::make('Company Information')
                     ->schema([
+                        Forms\Components\FileUpload::make('logo')
+                            ->label('Company Logo')
+                            ->image()
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '1:1',
+                                '16:9',
+                                '4:3',
+                            ])
+                            ->directory('companies/logos')
+                            ->visibility('public')
+                            ->maxSize(2048)
+                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml', 'image/webp'])
+                            ->helperText('Upload a company logo (PNG, JPG, SVG, or WebP, max 2MB). Recommended size: 512×512px')
+                            ->imagePreviewHeight('120')
+                            ->imageCropAspectRatio('1:1')
+                            ->imageResizeTargetWidth('512')
+                            ->imageResizeTargetHeight('512')
+                            ->columnSpanFull(),
+
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255)
@@ -94,6 +114,13 @@ class CompanyResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('logo')
+                    ->label('Logo')
+                    ->circular()
+                    ->size(48)
+                    ->defaultImageUrl(fn() => 'https://ui-avatars.com/api/?name=' . urlencode('Company') . '&color=3B82F6&background=EFF6FF&size=512')
+                    ->toggleable(),
+
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable()
@@ -172,6 +199,13 @@ class CompanyResource extends Resource
             ->schema([
                 Infolists\Components\Section::make('Company Details')
                     ->schema([
+                        Infolists\Components\ImageEntry::make('logo')
+                            ->label('Company Logo')
+                            ->size(120)
+                            ->circular()
+                            ->defaultImageUrl(fn($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name) . '&color=3B82F6&background=EFF6FF&size=512')
+                            ->columnSpanFull(),
+
                         Infolists\Components\TextEntry::make('name')
                             ->size(Infolists\Components\TextEntry\TextEntrySize::Large)
                             ->weight('bold'),
