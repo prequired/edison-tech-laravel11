@@ -2068,6 +2068,719 @@ body {
 }
 
 /* ========================================================================
+   AWWWARDS-QUALITY ENHANCEMENTS - Designed by 2000 CTOs
+   ======================================================================== */
+
+/* Premium Page Transitions */
+@keyframes pageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.fi-page {
+    animation: pageSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Sophisticated Card Hover */
+.fi-section,
+.fi-ta-content,
+.fi-wi-stats-overview-stat {
+    position: relative;
+    transition: all var(--edison-duration-normal) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fi-section:hover,
+.fi-ta-content:hover {
+    transform: translateY(-2px);
+}
+
+/* Premium Button Press Effect */
+.fi-btn:active {
+    transform: scale(0.96);
+}
+
+/* Smooth Page Reveal */
+@keyframes reveal {
+    from {
+        opacity: 0;
+        clip-path: inset(0 100% 0 0);
+    }
+    to {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+/* Magnetic Hover Effect for Interactive Elements */
+.fi-btn,
+.fi-sidebar-item,
+.fi-ta-row {
+    transition: transform var(--edison-duration-fast) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Stagger Animation for Lists */
+.fi-ta-row {
+    animation: fadeSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.fi-ta-row:nth-child(1) { animation-delay: 0.05s; }
+.fi-ta-row:nth-child(2) { animation-delay: 0.1s; }
+.fi-ta-row:nth-child(3) { animation-delay: 0.15s; }
+.fi-ta-row:nth-child(4) { animation-delay: 0.2s; }
+.fi-ta-row:nth-child(5) { animation-delay: 0.25s; }
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Premium Form Focus Flow */
+.fi-fo-field-wrp:focus-within {
+    transform: scale(1.01);
+    transition: transform var(--edison-duration-fast) var(--edison-ease-elastic);
+}
+
+/* Luxury Input Glow */
+.fi-input:focus {
+    box-shadow:
+        0 0 0 4px rgba(59, 130, 246, 0.1),
+        0 4px 12px rgba(59, 130, 246, 0.15),
+        0 0 20px rgba(59, 130, 246, 0.1);
+    border-color: rgb(var(--edison-primary));
+}
+
+/* Sophisticated Select Dropdown */
+.fi-select-list {
+    animation: dropdownSlide 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: top;
+}
+
+@keyframes dropdownSlide {
+    from {
+        opacity: 0;
+        transform: scaleY(0.95) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scaleY(1) translateY(0);
+    }
+}
+
+/* Premium Toggle Switch */
+.fi-toggle {
+    transition: all var(--edison-duration-normal) var(--edison-ease-elastic);
+}
+
+.fi-toggle:checked {
+    background: linear-gradient(135deg, rgb(var(--edison-primary)), rgb(var(--edison-info)));
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Awwwards-Quality Image Gallery */
+.fi-fo-file-upload-preview {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--edison-radius-lg);
+    transition: all var(--edison-duration-normal) var(--edison-ease-out);
+}
+
+.fi-fo-file-upload-preview:hover {
+    transform: scale(1.05);
+    box-shadow: var(--edison-shadow-xl);
+}
+
+.fi-fo-file-upload-preview::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent);
+    opacity: 0;
+    transition: opacity var(--edison-duration-normal) var(--edison-ease-out);
+}
+
+.fi-fo-file-upload-preview:hover::before {
+    opacity: 1;
+}
+
+/* Premium Badge Pulse */
+.fi-badge {
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* Sophisticated Tooltip */
+.fi-dropdown-panel {
+    animation: tooltipFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes tooltipFade {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Premium Breadcrumb Trail */
+.fi-breadcrumbs {
+    position: relative;
+    padding-bottom: var(--edison-space-2);
+}
+
+.fi-breadcrumbs::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 40px;
+    background: var(--edison-gradient-premium);
+    border-radius: var(--edison-radius-full);
+}
+
+/* Awwwards-Quality Data Presentation */
+.fi-in-entry-wrp {
+    position: relative;
+    padding: var(--edison-space-4);
+    border-radius: var(--edison-radius-md);
+    transition: all var(--edison-duration-fast) var(--edison-ease-out);
+}
+
+.fi-in-entry-wrp:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), transparent);
+    transform: translateX(4px);
+}
+
+/* Premium Action Group */
+.fi-ac-group {
+    gap: var(--edison-space-2);
+}
+
+.fi-ac-group .fi-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.fi-ac-group .fi-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width var(--edison-duration-slower) var(--edison-ease-out),
+                height var(--edison-duration-slower) var(--edison-ease-out);
+}
+
+.fi-ac-group .fi-btn:hover::before {
+    width: 200px;
+    height: 200px;
+}
+
+/* Sophisticated Timeline */
+.fi-timeline {
+    position: relative;
+    padding-left: var(--edison-space-8);
+}
+
+.fi-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg,
+        transparent,
+        rgba(59, 130, 246, 0.5) 10%,
+        rgba(59, 130, 246, 0.5) 90%,
+        transparent
+    );
+}
+
+/* Premium Pagination */
+.fi-pagination {
+    gap: var(--edison-space-2);
+}
+
+.fi-pagination .fi-btn {
+    min-width: 40px;
+    height: 40px;
+    border-radius: var(--edison-radius-lg);
+    transition: all var(--edison-duration-fast) var(--edison-ease-elastic);
+}
+
+.fi-pagination .fi-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: var(--edison-shadow-md);
+}
+
+.fi-pagination .fi-btn[aria-current="page"] {
+    background: linear-gradient(135deg, rgb(var(--edison-primary)), rgb(var(--edison-info)));
+    box-shadow: var(--edison-shadow-primary);
+}
+
+/* Awwwards-Quality Search */
+.fi-global-search {
+    position: relative;
+}
+
+.fi-global-search-field {
+    transition: all var(--edison-duration-normal) var(--edison-ease-out);
+    border-radius: var(--edison-radius-xl);
+}
+
+.fi-global-search-field:focus {
+    width: 400px;
+    box-shadow: var(--edison-shadow-glow);
+}
+
+/* Premium Filter Chips */
+.fi-ta-filters {
+    gap: var(--edison-space-2);
+}
+
+.fi-ta-filter-chip {
+    position: relative;
+    padding: var(--edison-space-2) var(--edison-space-4);
+    border-radius: var(--edison-radius-full);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    transition: all var(--edison-duration-fast) var(--edison-ease-out);
+}
+
+.fi-ta-filter-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--edison-shadow-sm);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+}
+
+/* Sophisticated Widget Grid */
+.fi-wi-grid {
+    display: grid;
+    gap: var(--edison-space-6);
+    animation: widgetReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@keyframes widgetReveal {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Premium Resource Header */
+.fi-header-heading {
+    font-size: var(--edison-font-h2);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #1e293b, #475569);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Awwwards-Quality Page Actions */
+.fi-header-actions {
+    gap: var(--edison-space-3);
+}
+
+.fi-header-actions .fi-btn {
+    box-shadow: var(--edison-shadow-sm);
+}
+
+.fi-header-actions .fi-btn:hover {
+    box-shadow: var(--edison-shadow-md);
+}
+
+/* Premium Skeleton Loader */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.fi-skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(243, 244, 246, 1) 0px,
+        rgba(229, 231, 235, 1) 40px,
+        rgba(243, 244, 246, 1) 80px
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+/* ========================================================================
+   AWWWARDS-QUALITY TABLE ENHANCEMENTS
+   ======================================================================== */
+
+/* Premium Table Row Interactions */
+.fi-ta-row {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.fi-ta-row:hover {
+    background: linear-gradient(
+        90deg,
+        rgba(59, 130, 246, 0.02) 0%,
+        rgba(99, 102, 241, 0.03) 50%,
+        rgba(59, 130, 246, 0.02) 100%
+    ) !important;
+    transform: translateX(2px);
+    box-shadow: 0 2px 8px -2px rgba(59, 130, 246, 0.1),
+                inset 2px 0 0 0 rgba(59, 130, 246, 0.3);
+}
+
+.fi-ta-row:hover .fi-ta-cell {
+    color: var(--edison-gray-900);
+}
+
+/* Premium Table Cell */
+.fi-ta-cell {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Premium Badge Enhancements */
+.fi-badge {
+    position: relative;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--edison-radius-lg);
+    box-shadow: var(--edison-shadow-xs);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fi-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--edison-shadow-sm);
+}
+
+/* Premium Badge Glow Effects */
+.fi-badge[class*="success"] {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.15));
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: rgb(5, 150, 105);
+}
+
+.fi-badge[class*="danger"] {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.15));
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: rgb(220, 38, 38);
+}
+
+.fi-badge[class*="warning"] {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.15));
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: rgb(217, 119, 6);
+}
+
+.fi-badge[class*="info"] {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.15));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: rgb(37, 99, 235);
+}
+
+.fi-badge[class*="primary"] {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(79, 70, 229, 0.15));
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: rgb(79, 70, 229);
+}
+
+/* ========================================================================
+   AWWWARDS-QUALITY FORM ENHANCEMENTS
+   ======================================================================== */
+
+/* Premium Checkbox & Radio */
+input[type="checkbox"],
+input[type="radio"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1),
+                inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+input[type="checkbox"]:hover,
+input[type="radio"]:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.05);
+}
+
+/* Premium Toggle Switch */
+.fi-fo-toggle {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fi-fo-toggle input:checked + .fi-fo-toggle-track {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3),
+                inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.fi-fo-toggle-handle {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+                0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+/* Premium File Upload Area */
+.fi-fo-file-upload {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px dashed rgba(147, 197, 253, 0.5);
+    background: linear-gradient(135deg,
+                                rgba(239, 246, 255, 0.5),
+                                rgba(219, 234, 254, 0.3));
+}
+
+.fi-fo-file-upload:hover {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg,
+                                rgba(239, 246, 255, 0.8),
+                                rgba(219, 234, 254, 0.6));
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.fi-fo-file-upload:focus-within {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1),
+                0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+/* Premium Image Preview */
+.fi-fo-file-upload-item {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--edison-radius-lg);
+    overflow: hidden;
+}
+
+.fi-fo-file-upload-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--edison-shadow-lg);
+}
+
+.fi-fo-file-upload-item img {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fi-fo-file-upload-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Premium Rich Text Editor */
+.fi-fo-rich-editor {
+    border-radius: var(--edison-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--edison-shadow-sm);
+}
+
+.fi-fo-rich-editor:focus-within {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1),
+                var(--edison-shadow-md);
+}
+
+/* Premium Tags Input */
+.fi-fo-tags-input-tag {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.15));
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: var(--edison-radius-md);
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fi-fo-tags-input-tag:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.2));
+    transform: translateY(-1px);
+    box-shadow: var(--edison-shadow-sm);
+}
+
+/* ========================================================================
+   PREMIUM MODAL & SLIDE-OVER ENHANCEMENTS
+   ======================================================================== */
+
+/* Premium Modal Backdrop */
+.fi-modal-backdrop {
+    backdrop-filter: blur(8px);
+    background: rgba(15, 23, 42, 0.75);
+}
+
+/* Premium Modal Window */
+.fi-modal-window {
+    animation: modalSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Premium Slide-Over */
+.fi-slide-over {
+    animation: slideOverIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@keyframes slideOverIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ========================================================================
+   PREMIUM ACTION BUTTONS & INTERACTIONS
+   ======================================================================== */
+
+/* Premium Action Button Group */
+.fi-ac-btn-group {
+    gap: var(--edison-space-2);
+}
+
+.fi-ac-btn-group .fi-btn {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fi-ac-btn-group .fi-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Premium Icon Button */
+.fi-icon-btn {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fi-icon-btn:hover {
+    transform: scale(1.1);
+    box-shadow: var(--edison-shadow-md);
+}
+
+/* Premium Dropdown Menu */
+.fi-dropdown-menu {
+    animation: dropdownSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+                0 8px 10px -6px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes dropdownSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.fi-dropdown-menu-item {
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fi-dropdown-menu-item:hover {
+    background: linear-gradient(90deg,
+                                rgba(59, 130, 246, 0.08),
+                                rgba(99, 102, 241, 0.05));
+    transform: translateX(2px);
+}
+
+/* ========================================================================
+   PREMIUM NOTIFICATION TOASTS
+   ======================================================================== */
+
+/* Premium Success Notification */
+.fi-notification[class*="success"] {
+    background: linear-gradient(135deg,
+                                rgba(16, 185, 129, 0.95),
+                                rgba(5, 150, 105, 1));
+    border-left: 4px solid #059669;
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.3),
+                0 8px 10px -6px rgba(16, 185, 129, 0.2);
+    animation: notificationSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Premium Error Notification */
+.fi-notification[class*="danger"] {
+    background: linear-gradient(135deg,
+                                rgba(239, 68, 68, 0.95),
+                                rgba(220, 38, 38, 1));
+    border-left: 4px solid #dc2626;
+    box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.3),
+                0 8px 10px -6px rgba(239, 68, 68, 0.2);
+    animation: notificationShake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes notificationSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes notificationShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+/* ========================================================================
    END OF EDISON TECH THEME
-   Award-winning design by 500 experts • Version 2.0
+   Award-winning design by 2000 CTOs • Version 4.0 • Awwwards-Quality
    ======================================================================== */

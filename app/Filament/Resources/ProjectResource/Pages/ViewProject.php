@@ -10,10 +10,15 @@ class ViewProject extends ViewRecord
 {
     protected static string $resource = ProjectResource::class;
 
+    protected static string $view = 'filament.resources.projects.view';
+
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            Actions\EditAction::make()
+                ->icon('heroicon-o-pencil-square'),
+            Actions\DeleteAction::make()
+                ->icon('heroicon-o-trash'),
         ];
     }
 }

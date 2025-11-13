@@ -10,10 +10,15 @@ class ViewCompany extends ViewRecord
 {
     protected static string $resource = CompanyResource::class;
 
+    protected static string $view = 'filament.resources.companies.view';
+
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            Actions\EditAction::make()
+                ->icon('heroicon-o-pencil-square'),
+            Actions\DeleteAction::make()
+                ->icon('heroicon-o-trash'),
         ];
     }
 }
