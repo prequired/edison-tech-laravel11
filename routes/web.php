@@ -50,11 +50,23 @@ use App\Http\Controllers\Web\TeamController;
 use App\Http\Controllers\Web\ContactController;
 use App\Http\Controllers\Web\NewsletterController;
 
+// Health Check Controller
+use App\Http\Controllers\HealthCheckController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
+// ============================================================================
+// HEALTH CHECK ROUTES (No middleware, public for monitoring)
+// ============================================================================
+
+Route::get('/health', [HealthCheckController::class, 'index'])->name('health');
+Route::get('/health/comprehensive', [HealthCheckController::class, 'comprehensive'])->name('health.comprehensive');
+Route::get('/health/readiness', [HealthCheckController::class, 'readiness'])->name('health.readiness');
+Route::get('/health/liveness', [HealthCheckController::class, 'liveness'])->name('health.liveness');
 
 // ============================================================================
 // PUBLIC ROUTES
