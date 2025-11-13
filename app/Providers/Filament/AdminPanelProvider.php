@@ -81,4 +81,5 @@ class AdminPanelProvider extends PanelProvider
                 'panels::body.start',
                 fn (): string => '<div class="edison-bg-mesh fixed inset-0 pointer-events-none opacity-40 z-0"></div>'
             );
+    }
 }
