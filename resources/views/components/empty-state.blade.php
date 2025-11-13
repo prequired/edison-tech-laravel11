@@ -6,10 +6,10 @@
     'actionLabel' => 'Create New',
 ])
 
-<div {{ $attributes->merge(['class' => 'edison-empty-state']) }}>
+<div {{ $attributes->merge(['class' => 'edison-empty-state']) }} role="status" aria-live="polite">
     <div class="text-center py-16 px-6">
         {{-- Animated Icon Container --}}
-        <div class="relative inline-flex items-center justify-center mb-6">
+        <div class="relative inline-flex items-center justify-center mb-6" aria-hidden="true">
             {{-- Animated Background Circles --}}
             <div class="absolute inset-0 animate-ping-slow opacity-20">
                 <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500"></div>

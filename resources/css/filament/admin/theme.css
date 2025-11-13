@@ -2781,6 +2781,124 @@ input[type="radio"]:hover {
 }
 
 /* ========================================================================
+   ACCESSIBILITY - Reduced Motion & ARIA Support
+   ======================================================================== */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Disable specific animations */
+    .fi-wi-wrapper,
+    .edison-premium-table,
+    .edison-float,
+    .fi-ta-row,
+    .fi-page,
+    .fi-modal-window,
+    .fi-slide-over,
+    .fi-dropdown-menu,
+    .fi-notification {
+        animation: none !important;
+    }
+}
+
+/* Screen Reader Only - Visually hidden but accessible */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus visible for better keyboard navigation */
+.focus-visible:focus {
+    outline: 2px solid rgb(var(--edison-primary));
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .fi-badge,
+    .fi-btn,
+    .fi-fo-field-wrp {
+        border-width: 2px;
+    }
+}
+
+/* ========================================================================
+   BRAND CONSISTENCY HELPERS
+   ======================================================================== */
+
+/* Edison Tech Brand Gradient - Use for all headers */
+.edison-brand-gradient-bg {
+    background: linear-gradient(135deg,
+                                rgb(239 246 255) 0%,    /* blue-50 */
+                                rgb(224 231 255) 50%,    /* indigo-50 */
+                                rgb(243 232 255) 100%);  /* purple-50 */
+}
+
+.edison-brand-gradient-text {
+    background: linear-gradient(135deg,
+                                rgb(37 99 235),          /* blue-600 */
+                                rgb(79 70 229));         /* indigo-600 */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Dark mode brand gradient */
+@media (prefers-color-scheme: dark) {
+    .edison-brand-gradient-bg {
+        background: linear-gradient(135deg,
+                                    rgb(31 41 55) 0%,
+                                    rgb(17 24 39) 50%,
+                                    rgb(31 41 55) 100%);
+    }
+}
+
+/* ========================================================================
+   STANDARDIZED ANIMATION SYSTEM
+   ======================================================================== */
+
+/* Standard easing function for all brand animations */
+:root {
+    --edison-ease-brand: cubic-bezier(0.16, 1, 0.3, 1); /* Smooth elastic ease */
+}
+
+/* Reusable animation classes */
+.animate-fade-slide-up {
+    animation: fadeSlideUp 0.5s var(--edison-ease-brand) backwards;
+}
+
+.animate-fade-slide-in {
+    animation: fadeSlideIn 0.3s var(--edison-ease-brand) backwards;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s var(--edison-ease-brand) backwards;
+}
+
+/* Standard stagger delays */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+
+/* ========================================================================
    END OF EDISON TECH THEME
-   Award-winning design by 2000 CTOs • Version 4.0 • Awwwards-Quality
+   Award-winning design by 2000 CTOs • Version 5.0 • Awwwards-Quality
+   Brand-aligned • Accessibility-enhanced • Production-ready
    ======================================================================== */

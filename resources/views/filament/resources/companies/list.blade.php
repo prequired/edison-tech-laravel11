@@ -1,9 +1,9 @@
 <x-filament-panels::page>
     {{-- Premium List Header with Gradient --}}
-    <div class="mb-8 -mt-6 -mx-6 px-6 py-8 bg-gradient-to-br from-emerald-50 via-teal-50 to-blue-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 border-b border-gray-200 dark:border-gray-700 edison-bg-mesh">
+    <div class="mb-8 -mt-6 -mx-6 px-6 py-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 border-b border-gray-200 dark:border-gray-700 edison-bg-mesh">
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight">
+                <h1 class="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent tracking-tight">
                     {{ $this->getTitle() }}
                 </h1>
                 @if($subheading = $this->getSubheading())

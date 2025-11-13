@@ -3,7 +3,7 @@
     'type' => 'spinner', // spinner, dots, pulse, bars
 ])
 
-<div {{ $attributes->merge(['class' => 'flex flex-col items-center justify-center p-8']) }}>
+<div {{ $attributes->merge(['class' => 'flex flex-col items-center justify-center p-8']) }} role="status" aria-live="polite" aria-busy="true">
     @if($type === 'spinner')
         {{-- Premium Spinner with Gradient --}}
         <div class="relative w-16 h-16">
